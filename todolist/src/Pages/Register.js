@@ -1,8 +1,37 @@
-import React from 'react'
+import { useState } from "react"
 
 const Register = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const RegisterUser = (e) => {
+        e.preventDefault();
+        const fetching = async () => {
+            const response = await fetch('http://localhost:5050/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username,
+                    password
+                })
+            })
+            const data = await response.json();
+            console.log(data);
+        }
+        fetching();
+    }
+
   return (
-    <div>Register</div>
+    <div>
+        <h1>Register</h1>
+        <form onSubmit= {(e) => RegisterUser(e)}>
+            <input type="text" placeholder="Enter your Username" onChange={(e)=> setUsername(e.target.value)}/>
+            <input type="password" placeholder="Enter your Password" onChange={(e)=> setPassword(e.target.value)}/>
+            <button type="submit">Login</button>
+        </form>
+    </div>
   )
 }
 
