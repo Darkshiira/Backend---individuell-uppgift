@@ -17,6 +17,10 @@ const Members = () => {
         fetchingMembers();
     }, [])
 
+    const goBack = () => {
+        window.location.href = '/todolist'
+    }
+
     const addfriend = async (id) => {
         const response = await fetch(`http://localhost:5050/members?id=${id}`, {
             method: 'POST',
@@ -29,6 +33,7 @@ const Members = () => {
 
   return (
     <>
+    <button onClick={() => goBack()}>Back</button>
     <h1>Members</h1>
     {members.map((member) => <div key= {member.id}><p>{member.userName}</p><button onClick={(e)=> addfriend(member.id)}>Add to friends</button></div>)}
     

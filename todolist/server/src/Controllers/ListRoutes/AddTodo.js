@@ -25,7 +25,7 @@ module.exports.AddTodo =  async (req, res) => {
          toDo: todo,
           listName: name})
           .then(() => { 
-    res.status(202).json('Todo added');
+    res.status(201).json('Todo added');
     }).catch((error) => {
 
     res.status(400).json(error);

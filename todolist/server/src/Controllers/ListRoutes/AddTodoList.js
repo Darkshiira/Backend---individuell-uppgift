@@ -20,7 +20,7 @@ module.exports.AddTodoList =  async (req, res) => {
     const {name, username} = value;
 
     List.query().insert({userName: username, listName: name}).then(() => { 
-    res.status(202).json('Todo added');
+    res.status(201).json('Todo added');
     }).catch((error) => {
 
         if (UniqueViolationError) return res.status(409).json('List already excists');

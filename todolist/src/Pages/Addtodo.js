@@ -6,6 +6,7 @@ const Addtodo = () => {
     const [todoList, setTodoList] = useState([]);
     const [showTodoList, setShowTodoList] = useState(false);
     const [name, setName] = useState('');
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         const fetchingTodo = async () => {
@@ -21,7 +22,6 @@ const Addtodo = () => {
 
     const AddNewTodoList = async (e) => {
         e.preventDefault();
-        console.log(todo)
 
         const response = await fetch('http://localhost:5050/todo/addtodolist', {
             method: 'POST',
@@ -34,10 +34,15 @@ const Addtodo = () => {
             credentials: 'include'
         })
         const data = await response.json();
-        console.log(data);
+        setMessage(data.message);
         if (response.status === 202) {
             setSucess(true);
         }
+        if (response.status === 403)
+        window.location.href = '/'
+
+        if (response.status === 409)
+
 
     AddNewTodoList();
 
@@ -58,16 +63,18 @@ const Addtodo = () => {
             credentials: 'include'
         })
         const data = await response.json();
+        setMessage(data.message);
         
         if(response.status === 201) {
             setShowTodoList(true);
+            setTodo('')
+
         }
 
         if (response.status === 403)
-        window.location.href = '/'
-
-        if (response.status === 409)
-        console.log('Listname already exists')
+        {
+        window.location.href = '/'}
+        
 
 
     }
@@ -80,7 +87,7 @@ const Addtodo = () => {
             <h1>{name}</h1>
             {todoList.map((todo) => (
             <div key={todo.id}>
-                <h1>{todo.toDo}</h1>
+                <p>{todo.toDo}</p>
             </div>
         ))} </div> : null
 
@@ -103,6 +110,8 @@ const Addtodo = () => {
         <button type="submit">Create a new list</button>
     </form>
     </div>}
+
+    {message}
 
     </>
   )
