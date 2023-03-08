@@ -4,44 +4,51 @@ import { useParams } from 'react-router-dom'
 
 const Todo = () => {
     const [todo, setTodo] = useState([]);
+    const [newTodo, setNewTodo] = useState('');
     const {id} = useParams();
     const [textField, setTextField] = useState(false);
     const [patch, setPatch] = useState('');
+    const [addNew, setAddNew] = useState(false);
+    const [data, setData] = useState(false);
+    const [forPatch, setForPatch] = useState('');
 
 
     useEffect(() => {
         const fetchingTodo = async () => {
-            const response = await fetch(`http://localhost:5050/todo?id=${id}`, {
+            const response = await fetch(`http://localhost:5050/todo/showtodo?id=${id}`, {
                 method: 'GET',
                 credentials: 'include',
                 })
                 
             const data = await response.json();
             setTodo(data);
+            setData(true)
 
             if (response.status === 403)
         window.location.href = '/login'
         }
         fetchingTodo();
+        
+        
    
-    }, [id])
+    }, [addNew])
 
-    const deleteTodo = async (e) => {
-        e.preventDefault();
-
+    const deleteTodo = async (id) => {
         const response = await fetch(`http://localhost:5050/todo?id=${id}`, {
             method: 'DELETE',
             credentials: 'include'
         })
         const data = await response.json();
-        console.log(data);
-        window.location.href = '/todolist';
+        if (response.status === 403)
+        window.location.href = '/login'
+
+        if (response.status === 200)
+        window.location.reload();
     }
 
-    const openTextfield= async (e) => {
-        e.preventDefault();
+    const openTextfield= async (id) => {
 
-        const response = await fetch(`http://localhost:5050/todo?id=${id}`, {
+        const response = await fetch(`http://localhost:5050/todo/item?id=${id}`, {
             method: 'GET',
             credentials: 'include'
         })
@@ -53,41 +60,87 @@ const Todo = () => {
 
     const patchingTodo = async (e) => {
         e.preventDefault();
+        const id = patch[0].id;
+        const todo = forPatch
 
-        const response = await fetch(`http://localhost:5050/todo?id=${id}`, {
+        const response = await fetch(`http://localhost:5050/todo`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                patch
+                id,
+                todo
+                
             }),
             credentials: 'include'
         })
         const data = await response.json();
-        console.log(data);
-        window.location.href = '/todolist';
+
+        if (response.status === 403)
+        window.location.href = '/login'
+
+        if (response.status === 201)
+        window.location.reload();
+
     }
 
+    const AddTodo = async (e) => {
+        e.preventDefault();
+        setAddNew(true);
+    }
+
+    const AddnewTodo = async (e) => {
+        e.preventDefault();
+
+        const response = await fetch(`http://localhost:5050/todo/addnewtodo?`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id,
+                newTodo
+            }),
+            credentials: 'include'
+        })
+        const data = await response.json();
+        if (response.status === 403){
+        window.location.href = '/login'}
+
+        if (response.status === 201){
+        setAddNew(false)}
+    }
 
 
 
   return (
     <> 
+    {addNew ? <form onSubmit={(e)=>AddnewTodo(e)}>
+    <input type="text" placeholder="Enter your Todo" onChange={(e) => setNewTodo(e.target.value)}/>
+    <button>Submit</button>
+    </form>
+    : null }
     {textField ? <div>
-    <input type="text" value={patch.map((patch) => patch.toDo)} placeholder="Enter your Todo" onChange={(e) => setPatch(e.target.value)}/>
+    <input type="text" defaultValue={patch[0].toDo} placeholder="Enter your Todo" onChange={(e) => setForPatch(e.target.value)}/>
     <button onClick={(e) => patchingTodo(e)}>Submit</button>
     </div>
-    :
-    <div>{todo.map((todo) => 
+    : null}
+        {data ? 
+        <div><h1>{todo[0].listName}</h1>
+        {todo.map((todo) => 
     <div key= {todo.id}>
     <p>{todo.toDo}</p>
-    <button onClick={(e)=>deleteTodo(e)}>Delete</button>
-    </div>)}</div> }
+    <button onClick={(e)=>deleteTodo(todo.id)}>Delete</button>
+    <button onClick={(e) => openTextfield(todo.id)}>Change Todo</button>
+    </div>)}
+    </div> : <p>Loading...</p>}
+    
     <aside>
     <button onClick={(e) => window.location.href = '/todolist'}>Back</button>
-    <button onClick={(e) => openTextfield(e)}>Change Todo</button>
+    <button onClick={(e) => AddTodo(e)}>Add Todo</button>
     </aside>
+
 
     </>
   )

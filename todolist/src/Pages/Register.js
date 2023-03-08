@@ -29,7 +29,7 @@ const Register = () => {
         <form onSubmit= {(e) => RegisterUser(e)}>
             <input type="text" placeholder="Enter your Username" onChange={(e)=> setUsername(e.target.value)}/>
             <input type="password" placeholder="Enter your Password" onChange={(e)=> setPassword(e.target.value)}/>
-            <button type="submit">Login</button>
+            <button type="submit">Register</button>
         </form>
     </div>
   )
