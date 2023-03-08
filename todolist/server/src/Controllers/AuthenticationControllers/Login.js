@@ -5,7 +5,7 @@ const { knex } = require('../../Modules/DatabaseConnection');
 const { Model } = require("objection");
   Model.knex(knex);
 
-  class Users extends Model {
+  class User extends Model {
     static get tableName() {
       return "user";
     }
@@ -22,7 +22,7 @@ module.exports.Login = async (req, res) => {
     if(error) return res.status(400).json(error.details[0].message);
 
     const {username, password} = value;
-    const user = await Users.query().select().where('userName', username );
+    const user = await User.query().select().where('userName', username );
     if(user.length === 0) return res.status(404).json('Username is wrong');
 
     const validPassword = await bcrypt.compare(password, user[0].userPassword);

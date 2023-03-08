@@ -5,6 +5,8 @@ const { Register } = require('../Controllers/AuthenticationControllers/Register'
 const { VerifyFriends } = require('../Controllers/ProfileRoutes/VerifyFriends');
 const { VerifyTodo } = require('../Controllers/ProfileRoutes/VerifyTodo');
 const { checkAuthentication } = require('../Middlewares/checkAuthentication');
+const { Verify } = require('../Controllers/AuthenticationControllers/Verify');
+const { Logout } = require('../Controllers/AuthenticationControllers/Logout');
 
 
 AuthenticationRoute.post('/login', Login);
@@ -13,5 +15,7 @@ AuthenticationRoute.post('/register', Register);
 
 AuthenticationRoute.get('/verifyfriends', checkAuthentication, VerifyFriends);
 AuthenticationRoute.get('/verifytodo', checkAuthentication, VerifyTodo);
+AuthenticationRoute.get('/verify', checkAuthentication, Verify);
+AuthenticationRoute.get('/logout', Logout);
 
 module.exports.AuthenticationRoute  = AuthenticationRoute ;
