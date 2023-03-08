@@ -1,6 +1,6 @@
 const joi = require('joi');
 const bcrypt = require('bcrypt');
-const { knex } = require('../Modules/DatabaseConnection');
+const { knex } = require('../../Modules/DatabaseConnection');
 const { Model } = require("objection");
   Model.knex(knex);
 
@@ -34,7 +34,7 @@ module.exports.Register =  async (req, res) => {
         userPassword: hashedPassword
     });
 
-    if (!newUser) return res.status(500).json('User not created');
+    if (!newUser) return res.status(500).json('User not created'); // This is not needed, because if the query fails, it will throw an error and go to the catch block
 
     res.status(201).json('User created');
 }

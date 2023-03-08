@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const {AuthenticationRoute} = require('./Routes/AuthenticationRoute');
+const {TodoRoute} = require('./Routes/TodoRoute');
 
 const knex = require("knex")({
     client: "mysql2",
@@ -28,6 +29,7 @@ const knex = require("knex")({
     }
   };
 
+  server.use(cookieParser());
 server.use(express.json());
 server.use(cors(
     {
@@ -37,6 +39,7 @@ server.use(cors(
 ));
 
 server.use('/auth', AuthenticationRoute);
+server.use('/todo', TodoRoute)
 
 
 server.listen(5050);

@@ -1,7 +1,7 @@
 const joi = require('joi');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { knex } = require('../Modules/DatabaseConnection');
+const { knex } = require('../../Modules/DatabaseConnection');
 const { Model } = require("objection");
   Model.knex(knex);
 
@@ -28,7 +28,7 @@ module.exports.Login = async (req, res) => {
     const validPassword = await bcrypt.compare(password, user[0].userPassword);
     if(!validPassword) return res.status(401).json('Password is wrong');
 
-    const token = jwt.sign({ username }, process.env.secret, { expiresIn: '1h' });
+    const token = jwt.sign({ username }, process.env.SECRET, { expiresIn: '1h' });
 
         res.cookie('authToken', token, {
           sameSite: 'none',
