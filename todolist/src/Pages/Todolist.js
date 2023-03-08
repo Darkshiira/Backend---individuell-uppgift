@@ -5,6 +5,7 @@ const Todolist = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [friends, setFriends] = useState([]);
     const [todos, setTodos] = useState([]);
+    const [list, setList] = useState(false);
     const {id} = useParams();
 
     useEffect(() => {
@@ -31,10 +32,12 @@ const Todolist = () => {
             const data = await response.json();
 
             if (data === 'You dont have anything to do') {
-                setTodos([{id:0},{toDo: 'You dont have todos'}]);
+                setList(false);
+                
             }
             else {
             setTodos(data);
+            setList(true);
             }
             setLoggedIn(true);
             
@@ -60,9 +63,16 @@ const Todolist = () => {
 
   return (
     <>
-    {loggedIn ? <div><h1>Logged in</h1> 
+    {loggedIn ? <div> <h1>Logged in</h1> 
     <div><h2>Friends</h2> {friends.map((friend) => <p key={friend.id}>{friend.userFriends}</p>)}</div><button onClick= {(e)=> viewMembers(e)}>Add new friends</button>
-    <div><h2>Todos</h2> <button onClick={(e) => AddTodo()}>Add todo</button> {todos.map((todo) => <div key={todo.id + 'todo'}><p>{todo.toDo}</p><button onClick={(e)=> administrate(todo.id)}>Show</button></div>)}</div> </div>
+    <div><h2>Todos</h2> <button onClick={(e) => AddTodo()}>Add todo</button> 
+    {list ?
+     <div>
+        {todos.map((todo) => <div key={todo.id + 'todo'}><p>{todo.listName}</p><button onClick={(e)=> administrate(todo.id)}>Show</button></div>)}
+        </div>
+         : 
+         <p>You don't have anything to do.</p>}
+        </div></div>
     : <h1>Not logged in</h1>}
     </>
   )

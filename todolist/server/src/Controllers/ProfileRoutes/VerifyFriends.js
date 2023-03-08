@@ -13,7 +13,7 @@ const { Model } = require("objection");
 
 module.exports.VerifyFriends =  async (req, res) => {
     const schema = joi.object({
-        username: joi.string().min(3).max(30).required(),
+        username: joi.string().min(3).max(36).required(),
     })
     const {error, value} = schema.validate(req.body);
     if(error) return res.status(400).json(error.details[0].message);

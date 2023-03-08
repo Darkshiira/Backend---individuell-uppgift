@@ -13,7 +13,7 @@ module.exports.DeleteTodo = async (req, res) => {
     
     const schema2 = joi.object({
         id: joi.number().required(),
-        username: joi.string().min(3).max(30).required(),
+        username: joi.string().min(3).max(36).required(),
     })
     const {error, value} = schema2.validate(req.query);
 
