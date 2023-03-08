@@ -9,7 +9,7 @@ const Addtodo = () => {
 
     useEffect(() => {
         const fetchingTodo = async () => {
-            const response = await fetch('http://localhost:5050/todo?name=name', {
+            const response = await fetch(`http://localhost:5050/todo?name=${name}`, {
                 method: 'GET',
                 credentials: 'include'
             })
@@ -36,10 +36,7 @@ const Addtodo = () => {
         const data = await response.json();
         console.log(data);
         if (response.status === 202) {
-
             setSucess(true);
-
-        
         }
 
     AddNewTodoList();
@@ -67,7 +64,7 @@ const Addtodo = () => {
         }
 
         if (response.status === 403)
-        window.location.href = '/login'
+        window.location.href = '/'
 
         if (response.status === 409)
         console.log('Listname already exists')

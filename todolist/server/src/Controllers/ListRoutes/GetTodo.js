@@ -19,7 +19,7 @@ module.exports.GetTodo = async (req, res) => {
     if(error) return res.status(400).json(error.details[0].message);
     const {name, username} = value;
 
-    const todo = await Todo.query().select().where('userName', username ).andWhere('name', name)
+    const todo = await Todo.query().select().where('userName', username ).andWhere('listName', name)
     if (todo.length === 0) return res.status(404).json('You dont have anything to do');
     res.status(200).json(todo);
 

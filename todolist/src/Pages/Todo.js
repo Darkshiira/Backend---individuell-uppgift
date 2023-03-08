@@ -25,7 +25,7 @@ const Todo = () => {
             setData(true)
 
             if (response.status === 403)
-        window.location.href = '/login'
+        window.location.href = '/'
         }
         fetchingTodo();
         
@@ -40,7 +40,7 @@ const Todo = () => {
         })
         const data = await response.json();
         if (response.status === 403)
-        window.location.href = '/login'
+        window.location.href = '/'
 
         if (response.status === 200)
         window.location.reload();
@@ -78,7 +78,7 @@ const Todo = () => {
         const data = await response.json();
 
         if (response.status === 403)
-        window.location.href = '/login'
+        window.location.href = '/'
 
         if (response.status === 201)
         window.location.reload();
@@ -106,7 +106,7 @@ const Todo = () => {
         })
         const data = await response.json();
         if (response.status === 403){
-        window.location.href = '/login'}
+        window.location.href = '/'}
 
         if (response.status === 201){
         setAddNew(false)}

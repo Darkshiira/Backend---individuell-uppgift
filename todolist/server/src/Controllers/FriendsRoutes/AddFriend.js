@@ -16,18 +16,20 @@ class Friends extends Model {
 };
 module.exports.AddFriend= async (req, res) => {
     
-    const schema2 = joi.object({
+    const schema = joi.object({
         id: joi.number().required(),
         username: joi.string().min(3).max(36).required(),
     })
 
-    const {error, value} = schema2.validate(req.query);
+    const {error, value} = schema.validate(req.query);
     if(error) return res.status(400).json(error.details[0].message);
 
     const {id, username} = value;
     const friend = await User.query().select().where('id', id);
     if (friend.length === 0) return res.status(404).json('Friend not found');
    
+    if (friend[0].userName === username) return res.status(409).json('You cant add yourself as a friend');
+    
     Friends.query().insert({
         userName: username,
         userFriends: friend[0].userName,

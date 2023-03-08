@@ -3,6 +3,7 @@ import { useState } from "react"
 const Register = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [answer, setAnswer] = useState('');
 
     const RegisterUser = (e) => {
         e.preventDefault();
@@ -18,7 +19,13 @@ const Register = () => {
                 })
             })
             const data = await response.json();
-            console.log(data);
+            setAnswer(data);
+            
+            if (response.status === 201)
+            {
+            setUsername('');
+            setPassword('');
+            }
         }
         fetching();
     }
@@ -31,6 +38,8 @@ const Register = () => {
             <input type="password" placeholder="Enter your Password" onChange={(e)=> setPassword(e.target.value)}/>
             <button type="submit">Register</button>
         </form>
+
+        <p>{answer}</p>
     </div>
   )
 }

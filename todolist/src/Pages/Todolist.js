@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 const Todolist = () => {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -64,7 +65,7 @@ const Todolist = () => {
   return (
     <>
     {loggedIn ? <div> <h1>Logged in</h1> 
-    <div><h2>Friends</h2> {friends.map((friend) => <p key={friend.id}>{friend.userFriends}</p>)}</div><button onClick= {(e)=> viewMembers(e)}>Add new friends</button>
+    <div><h2>Friends</h2> {friends.map((friend) => <div key={friend.id}><Link to={`/members/:${friend.id}`}>{friend.userFriends}</Link> </div>)}</div><button onClick= {(e)=> viewMembers(e)}>Add new friends</button>
     <div><h2>Todos</h2> <button onClick={(e) => AddTodo()}>Add todo</button> 
     {list ?
      <div>
