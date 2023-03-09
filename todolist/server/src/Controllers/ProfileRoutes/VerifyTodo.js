@@ -11,6 +11,8 @@ const { Model } = require("objection");
         }
     }
 
+//Endpoint for Profile page
+
 module.exports.VerifyTodo =  async (req, res) => {
     const schema = joi.object({
         username: joi.string().min(3).max(36).required(),
@@ -18,9 +20,13 @@ module.exports.VerifyTodo =  async (req, res) => {
     const {error, value} = schema.validate(req.body);
     if(error) return res.status(400).json(error.details[0].message);
     const {username} = value;
-
+    try {
     const todo = await Lists.query().select().where('userName', username )
     if (todo.length === 0) return res.status(404).json('You dont have anything to do');
     res.status(200).json(todo);
+    }
+    catch (err) {
+    res.status(500).json("Internal server error");
+    }
 }
 

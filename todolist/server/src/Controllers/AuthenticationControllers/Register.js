@@ -10,6 +10,8 @@ const { Model } = require("objection");
     }
   };
 
+//Endpoint for Register page
+
 module.exports.Register =  async (req, res) => {
     const schema = joi.object({
         username: joi.string().min(3).max(36).required(),
@@ -39,13 +41,9 @@ module.exports.Register =  async (req, res) => {
     res.status(201).json('User created');
 }
 catch (err) {
-    if (err === 'ER_DUP_ENTRY') {
-        res.statusCode = 409;
-        res.json("Duplicate entry");
+    if (err === 'ER_DUP_ENTRY') return res.status(409).json("Duplicate entry");
 
-    } else {
-        res.statusCode = 500;
-        res.json("Internal server error");
+        res.status(500).json("Internal server error");
       }
-}
+
 };

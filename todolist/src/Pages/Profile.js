@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {Link} from 'react-router-dom'
 
-const Todolist = () => {
+const Profile = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [friends, setFriends] = useState([]);
     const [todos, setTodos] = useState([]);
@@ -16,6 +16,8 @@ const Todolist = () => {
                 credentials: 'include'
             })
             const data = await response.json();
+            
+            if (response.status === 403) return window.location.href = '/'
 
             if (data === 'You dont have friends') {
                 setFriends([{id:0},{userFriends: 'You dont have any friends.....yet'}]);
@@ -60,6 +62,20 @@ const Todolist = () => {
         e.preventDefault();
         window.location.href = '/members'
     }
+
+    const deleteList = async (id) => {
+        const response = await fetch(`http://localhost:5050/list?id=${id}`, {
+            method: 'DELETE',
+            credentials: 'include'
+        })
+        const data = await response.json();
+        if (response.status === 403)
+        window.location.href = '/'
+        if (response.status === 200)
+        window.location.reload();
+    }
+
+
         
 
   return (
@@ -69,7 +85,7 @@ const Todolist = () => {
     <div><h2>Todos</h2> <button onClick={(e) => AddTodo()}>Add todo</button> 
     {list ?
      <div>
-        {todos.map((todo) => <div key={todo.id + 'todo'}><p>{todo.listName}</p><button onClick={(e)=> administrate(todo.id)}>Show</button></div>)}
+        {todos.map((todo) => <div key={todo.id + 'todo'}><p>{todo.listName}</p><button onClick={(e)=> administrate(todo.id)}>Show</button><button onClick ={(e)=>deleteList(todo.id)}>X</button></div>)}
         </div>
          : 
          <p>You don't have anything to do.</p>}
@@ -79,4 +95,4 @@ const Todolist = () => {
   )
 }
 
-export default Todolist
+export default Profile

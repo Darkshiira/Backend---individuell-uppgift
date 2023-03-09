@@ -11,6 +11,9 @@ const { Model } = require("objection");
     }
   };
 
+
+  //Endpoint for Profile page
+
 module.exports.VerifyFriends =  async (req, res) => {
     const schema = joi.object({
         username: joi.string().min(3).max(36).required(),
@@ -18,9 +21,12 @@ module.exports.VerifyFriends =  async (req, res) => {
     const {error, value} = schema.validate(req.body);
     if(error) return res.status(400).json(error.details[0].message);
     const {username} = value;
-
+    try {
     const user = await Friends.query().select().where('userName', username )
     if (user.length === 0) return res.status(404).json('You dont have friends');
     res.status(200).json(user);
 }
-
+catch (err) {
+  return res.status(500).json("Internal server error");
+}
+}

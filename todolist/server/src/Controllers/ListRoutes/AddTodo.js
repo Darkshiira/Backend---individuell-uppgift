@@ -9,6 +9,8 @@ const { Model } = require("objection");
         }
     }
 
+//Endpoint for Addtodo page
+
 module.exports.AddTodo =  async (req, res) => {
     const schema = joi.object({
         username: joi.string().min(3).max(36).required(),
@@ -19,15 +21,15 @@ module.exports.AddTodo =  async (req, res) => {
 
     if(error) return res.status(400).json(error.details[0].message);
     const {username, todo, name} = value;
-
+    try{
     Todo.query().insert({
         userName: username,
          toDo: todo,
           listName: name})
-          .then(() => { 
     res.status(201).json('Todo added');
-    }).catch((error) => {
+          }
+    catch (err) {
+        res.status(500).json("Internal server error");
+    }
 
-    res.status(400).json(error);
-    })
 }

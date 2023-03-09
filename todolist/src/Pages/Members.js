@@ -13,6 +13,8 @@ const Members = () => {
             })
             const data = await response.json();
             setMembers(data);
+
+            if (response.status === 403) return window.location.href = '/'
         }
         fetchingMembers();
     }, [])

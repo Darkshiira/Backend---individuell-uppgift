@@ -1,15 +1,12 @@
 const express = require('express');
 const server = express();
 const cors = require('cors');
-const dotenv = require('dotenv').config();
-const joi = require('joi');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv').config();
+const { ListRoute } = require('./Routes/ListRoute');
 const { AuthenticationRoute } = require('./Routes/AuthenticationRoute');
 const { TodoRoute } = require('./Routes/TodoRoute');
 const { FriendsRoute } = require('./Routes/FriendsRoute');
-
 const knex = require("knex")({
     client: "mysql2",
     connection: {
@@ -20,17 +17,9 @@ const knex = require("knex")({
     },
     pool: { min: 0, max: 7 },
   });
-
   const { Model } = require("objection");
   Model.knex(knex);
 
-  class Users extends Model {
-    static get tableName() {
-      return "user";
-    }
-  };
-
-  server.use(cookieParser());
 server.use(express.json());
 server.use(cors(
     {
@@ -38,10 +27,12 @@ server.use(cors(
         credentials: true
     }
 ));
+server.use(cookieParser());
 
 server.use('/auth', AuthenticationRoute);
 server.use('/todo', TodoRoute)
 server.use('/members', FriendsRoute)
+server.use('/list', ListRoute)
 
 
 server.listen(5050);

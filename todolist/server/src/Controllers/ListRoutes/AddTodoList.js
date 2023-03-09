@@ -9,6 +9,8 @@ const { Model, UniqueViolationError } = require("objection");
         }
     }
 
+    //Endpoint for Addtodo page
+
 module.exports.AddTodoList =  async (req, res) => {
     const schema = joi.object({
         username: joi.string().min(3).max(36).required(),
@@ -18,13 +20,14 @@ module.exports.AddTodoList =  async (req, res) => {
 
     if(error) return res.status(400).json(error.details[0].message);
     const {name, username} = value;
-
-    List.query().insert({userName: username, listName: name}).then(() => { 
+    try {
+    List.query().insert({userName: username, listName: name})
     res.status(201).json('Todo added');
-    }).catch((error) => {
+    }
+    catch(error){
 
-        if (UniqueViolationError) return res.status(409).json('List already excists');
+    if (UniqueViolationError) return res.status(409).json('List already exists');
 
     res.status(400).json(error);
-    })
+    }
 }

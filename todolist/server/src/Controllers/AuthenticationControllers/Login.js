@@ -11,6 +11,7 @@ const { Model } = require("objection");
     }
   };
 
+//Endpoint for Home page and Nav bar
 
 module.exports.Login = async (req, res) => {
 
@@ -22,6 +23,7 @@ module.exports.Login = async (req, res) => {
     if(error) return res.status(400).json(error.details[0].message);
 
     const {username, password} = value;
+    try {
     const user = await User.query().select().where('userName', username );
     if(user.length === 0) return res.status(404).json('Username is wrong');
 
@@ -37,4 +39,8 @@ module.exports.Login = async (req, res) => {
         })
 
     res.status(200).json('Login successful');
-};
+}
+catch (err) {
+    res.status(500).json("Internal server error");
+  }
+}

@@ -6,7 +6,7 @@ module.exports.checkAuthentication = (req, res, next) => {
     if (req.cookies.authToken) {
         jwt.verify(req.cookies.authToken, process.env.SECRET, (err, decoded) => {
             if (err) {
-                res.status(403).send('You are not authorized to access this resource');
+                res.status(403).json('You are not authorized to access this resource');
                 return;
             }
          req.body.username = decoded.username;
@@ -17,7 +17,7 @@ module.exports.checkAuthentication = (req, res, next) => {
         return;
         });
     } else {
-        res.status(403).send('You have to be logged in to access this resource');
+        res.status(403).json('You have to be logged in to access this resource');
         return;
     }
 };

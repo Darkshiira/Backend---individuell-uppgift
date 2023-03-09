@@ -10,12 +10,12 @@ const { Logout } = require('../Controllers/AuthenticationControllers/Logout');
 
 
 AuthenticationRoute.post('/login', Login);
-
+AuthenticationRoute.get('/logout', Logout);
 AuthenticationRoute.post('/register', Register);
 
 AuthenticationRoute.get('/verifyfriends', checkAuthentication, VerifyFriends);
 AuthenticationRoute.get('/verifytodo', checkAuthentication, VerifyTodo);
 AuthenticationRoute.get('/verify', checkAuthentication, Verify);
-AuthenticationRoute.get('/logout', Logout);
+
 
 module.exports.AuthenticationRoute  = AuthenticationRoute ;

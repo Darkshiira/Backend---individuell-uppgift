@@ -4,6 +4,7 @@ const Home = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
 
     const FetchingCookie = (e) => {
         e.preventDefault();
@@ -20,7 +21,9 @@ const Home = () => {
                 credentials: 'include'
             })
             const data = await response.json();
-            if (data === 'Login successful') {
+            setMessage(data);
+
+            if (response.status === 200) {
                 window.location.href = '/todolist';
             }
         }

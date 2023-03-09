@@ -10,20 +10,30 @@ const Addtodo = () => {
 
     useEffect(() => {
         const fetchingTodo = async () => {
-            const response = await fetch(`http://localhost:5050/todo?name=${name}`, {
+            const response = await fetch(`http://localhost:5050/list?name=${name}`, {
                 method: 'GET',
                 credentials: 'include'
             })
             const data = await response.json();
-            setTodoList(data);
+            
+            if (response.status === 200) { 
+                setTodoList(data);
+                setShowTodoList(true);
+            }
+            if (response.status === 403) return window.location.href = '/'
+
+            
+            
+            
         }
         fetchingTodo();
     }, [showTodoList])
 
+
     const AddNewTodoList = async (e) => {
         e.preventDefault();
 
-        const response = await fetch('http://localhost:5050/todo/addtodolist', {
+        const response = await fetch('http://localhost:5050/list/addtodolist', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -34,24 +44,17 @@ const Addtodo = () => {
             credentials: 'include'
         })
         const data = await response.json();
-        setMessage(data.message);
-        if (response.status === 202) {
+        setMessage(data);
+        if (response.status === 201) {
             setSucess(true);
         }
-        if (response.status === 403)
-        window.location.href = '/'
-
-        if (response.status === 409)
-
-
-    AddNewTodoList();
-
+        if (response.status === 403) return window.location.href = '/'
     }
 
     const AddNewTodo = async (e) => {
         e.preventDefault();
         
-        const response = await fetch('http://localhost:5050/todo/addtodo', {
+        const response = await fetch('http://localhost:5050/list/addtodo', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -66,14 +69,14 @@ const Addtodo = () => {
         setMessage(data.message);
         
         if(response.status === 201) {
-            setShowTodoList(true);
+            
             setTodo('')
 
         }
 
-        if (response.status === 403)
-        {
-        window.location.href = '/'}
+        if (response.status === 403) return window.location.href = '/'
+
+
         
 
 
