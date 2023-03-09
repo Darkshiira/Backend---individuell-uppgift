@@ -29,6 +29,9 @@ const Member = () => {
             setLists(unique);
             setData(true);
         }
+        else {
+            console.log(data)
+        }
         }
         fetchingMember();
     }, [])

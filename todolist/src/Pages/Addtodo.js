@@ -23,9 +23,10 @@ const Addtodo = () => {
             }
             if (response.status === 403) return window.location.href = '/'
 
-            
-            
-            
+            else {
+                console.log(data)
+            }
+
         }
         fetchingTodo();
     }, [showTodoList])
@@ -71,18 +72,10 @@ const Addtodo = () => {
         const data = await response.json();
         setMessage(data.message);
         
-        if(response.status === 201) {
-            
+        if(response.status === 201) {           
             setTodo('')
-
         }
-
         if (response.status === 403) return window.location.href = '/'
-
-
-        
-
-
     }
 
 

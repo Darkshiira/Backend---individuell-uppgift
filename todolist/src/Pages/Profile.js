@@ -18,14 +18,17 @@ const Profile = () => {
             })
             const data = await response.json();
             
+            if (response.status === 200) {
+                setFriends(data);
+            }
+
             if (response.status === 403) return window.location.href = '/'
 
-            if (data === 'You dont have friends') {
+            if (response.status === 404) {
                 setFriends([{id:0},{userFriends: 'You dont have any friends.....yet'}]);
 
-            } else {
-            
-                setFriends(data);
+            } else {    
+                console.log(data);
             }
         }
         const fetchingTodos = async () => {
@@ -76,6 +79,10 @@ const Profile = () => {
         window.location.href = '/'
         if (response.status === 200)
         window.location.reload();
+
+        else {
+            console.log(data);
+        }
     }
 
 

@@ -26,7 +26,7 @@ const Nav = () => {
 
         }
         fetchingLoggedIn();
-    })
+    }, [loggedIn])
 
     const LogOut = async () => {
         const response = await fetch('http://localhost:5050/auth/logout', {
@@ -41,8 +41,10 @@ const Nav = () => {
             window.location.reload();
 
         }
-        else {
-            console.log(data);
+        
+            if (response.status === 403) return window.location.href = '/'
+            else {
+                console.log(data);
         }
     }
 

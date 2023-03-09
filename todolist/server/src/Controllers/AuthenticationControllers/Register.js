@@ -36,12 +36,10 @@ module.exports.Register =  async (req, res) => {
         userPassword: hashedPassword
     });
 
-    if (!newUser) return res.status(500).json('User not created'); // This is not needed, because if the query fails, it will throw an error and go to the catch block
-
     res.status(201).json('User created');
 }
 catch (err) {
-    if (err === 'ER_DUP_ENTRY') return res.status(409).json("Duplicate entry");
+    if (err === 'ER_DUP_ENTRY') return res.status(409).json("Username already exists");
 
         res.status(500).json("Internal server error");
       }

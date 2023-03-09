@@ -21,8 +21,8 @@ const Todo = () => {
                 credentials: 'include',
                 })
                 
-            const data = await response.json();
-            setTodo(data);
+            const answer = await response.json();
+            setTodo(answer);
             setData(true)
 
             if (response.status === 403)
@@ -40,12 +40,16 @@ const Todo = () => {
             method: 'DELETE',
             credentials: 'include'
         })
-        const data = await response.json();
+        const answer = await response.json();
         if (response.status === 403)
         window.location.href = '/'
 
         if (response.status === 200)
         window.location.reload();
+
+        else {
+            console.log(answer)
+        }
     }
 
     const openTextfield= async (id) => {
@@ -78,7 +82,7 @@ const Todo = () => {
             }),
             credentials: 'include'
         })
-        const data = await response.json();
+        const answer = await response.json();
 
         if (response.status === 403)
         window.location.href = '/'
@@ -86,6 +90,9 @@ const Todo = () => {
         if (response.status === 201)
         window.location.reload();
 
+        else {
+            console.log(answer)
+        }
     }
 
     const AddTodo = async (e) => {
@@ -114,6 +121,10 @@ const Todo = () => {
 
         if (response.status === 201){
         setAddNew(false)}
+        
+        else {
+            console.log(data)
+        }
     }
 
 
