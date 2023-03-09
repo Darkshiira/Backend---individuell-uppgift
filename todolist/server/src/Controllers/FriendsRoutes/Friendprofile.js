@@ -32,17 +32,11 @@ module.exports.Friendprofile = async (req, res) => {
     try {
     const user = await Friends.query().select().where('id', member);
     if (user.length === 0) return res.status(404).json('User not found');
-    }
-    catch (err) {
-    return res.status(500).json("Internal server error");
-    }
-    try {
     const lists = await Todo.query().select().where('userName', user[0].userFriends).orderBy('listName', 'desc');
     if (lists.length === 0) return res.status(404).json('Your friend doesnt have anything to do');
-    
     res.status(200).json(lists);
     }
     catch (err) {
-    return res.status(500).json("Internal server error");
+    return res.status(500).json(err);
     }
 };

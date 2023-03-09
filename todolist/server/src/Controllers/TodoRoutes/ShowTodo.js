@@ -30,7 +30,7 @@ module.exports.ShowTodo = async (req, res) => {
     try {
     const todoList = await Lists.query().select().where('userName', username ).andWhere('id', id)
     if (todoList.length === 0) return res.status(404).json('No such list');
-    const todo = await Todo.query().select().where('listName', todoList[0].listName)
+    const todo = await Todo.query().select().where('listName', todoList[0].listName).andWhere('userName', username);
     if (todo.length === 0) return res.status(404).json('You dont have anything to do');
     res.status(200).json(todo);
     }

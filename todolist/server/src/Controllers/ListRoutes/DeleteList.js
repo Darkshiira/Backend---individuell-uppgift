@@ -34,7 +34,7 @@ module.exports.DeleteList = async (req, res) => {
     return res.status(500).json("Internal server error");
     }
     try {
-    Todo.query().delete().where('listName', listname[0].listName)
+    await Todo.query().delete().where('listName', listname[0].listName)
     }
     catch (err) {
     return res.status(500).json("Internal server error");

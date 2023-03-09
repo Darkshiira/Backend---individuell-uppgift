@@ -17,7 +17,6 @@ const Members = () => {
 
             if (response.status === 403) return window.location.href = '/'
             else {
-                console.log(data)
             }
         }
         fetchingMembers();

@@ -70,18 +70,30 @@ const Addtodo = () => {
             credentials: 'include'
         })
         const data = await response.json();
-        setMessage(data.message);
+        setMessage(data);
         
         if(response.status === 201) {           
-            setTodo('')
+            setTodo('');
+            setShowTodoList(true);
         }
         if (response.status === 403) return window.location.href = '/'
+
+        else {
+            console.log(data)
+        }
+    }
+
+    const goBack = (e) => {
+        e.preventDefault();
+        window.history.back();
     }
 
 
-
   return (
-    <> {sucess ?<div>
+    <>
+    <button onClick={(e) => goBack(e)}>Back</button> 
+    
+    {sucess ?<div>
         {showTodoList ? <div>
             <h1>{name}</h1>
             {todoList.map((todo) => (

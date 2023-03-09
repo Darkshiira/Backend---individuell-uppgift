@@ -25,13 +25,13 @@ const Todo = () => {
             setTodo(answer);
             setData(true)
 
-            if (response.status === 403)
-        window.location.href = '/'
+            if (response.status === 403) return window.location.href = '/'
+
+            else {
+                
+            }
         }
         fetchingTodo();
-        
-        
-   
     }, [addNew])
 
     const deleteTodo = async (id) => {
@@ -103,7 +103,7 @@ const Todo = () => {
     const AddnewTodo = async (e) => {
         e.preventDefault();
 
-        const response = await fetch(`http://localhost:5050/todo/addnewtodo?`, {
+        const response = await fetch(`http://localhost:5050/todo/addnewtodo`, {
             //Endpoint: AddTodotoList
             method: 'POST',
             headers: {
@@ -120,7 +120,9 @@ const Todo = () => {
         window.location.href = '/'}
 
         if (response.status === 201){
-        setAddNew(false)}
+            setAddNew(false);
+        window.location.reload()
+    }
         
         else {
             console.log(data)

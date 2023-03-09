@@ -28,7 +28,7 @@ const Profile = () => {
                 setFriends([{id:0},{userFriends: 'You dont have any friends.....yet'}]);
 
             } else {    
-                console.log(data);
+                
             }
         }
         const fetchingTodos = async () => {

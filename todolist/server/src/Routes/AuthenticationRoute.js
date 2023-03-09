@@ -10,7 +10,7 @@ const { Logout } = require('../Controllers/AuthenticationControllers/Logout');
 
 
 AuthenticationRoute.post('/login', Login);
-AuthenticationRoute.get('/logout', Logout);
+AuthenticationRoute.get('/logout', checkAuthentication, Logout);
 AuthenticationRoute.post('/register', Register);
 
 AuthenticationRoute.get('/verifyfriends', checkAuthentication, VerifyFriends);

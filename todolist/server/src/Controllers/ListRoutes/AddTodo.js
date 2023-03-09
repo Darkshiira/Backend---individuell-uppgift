@@ -22,7 +22,7 @@ module.exports.AddTodo =  async (req, res) => {
     if(error) return res.status(400).json(error.details[0].message);
     const {username, todo, name} = value;
     try{
-    Todo.query().insert({
+    await Todo.query().insert({
         userName: username,
          toDo: todo,
           listName: name})
