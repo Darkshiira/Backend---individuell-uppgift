@@ -12,6 +12,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchingFriends = async () => {
             const response = await fetch('http://localhost:5050/auth/verifyfriends', {
+                //Endpoint: VerifyFriends
                 method: 'GET',
                 credentials: 'include'
             })
@@ -29,6 +30,7 @@ const Profile = () => {
         }
         const fetchingTodos = async () => {
             const response = await fetch('http://localhost:5050/auth/verifytodo', {
+                //Endpoint: VerifyTodo
                 method: 'GET',
                 credentials: 'include'
             })
@@ -65,6 +67,7 @@ const Profile = () => {
 
     const deleteList = async (id) => {
         const response = await fetch(`http://localhost:5050/list?id=${id}`, {
+            //Endpoint: DeleteList
             method: 'DELETE',
             credentials: 'include'
         })

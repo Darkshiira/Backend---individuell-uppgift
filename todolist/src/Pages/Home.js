@@ -10,6 +10,7 @@ const Home = () => {
         e.preventDefault();
         const fetching = async () => {
             const response = await fetch('http://localhost:5050/auth/login', {
+                // Endpoint Login
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

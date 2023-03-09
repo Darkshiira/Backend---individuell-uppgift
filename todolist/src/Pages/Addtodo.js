@@ -11,6 +11,7 @@ const Addtodo = () => {
     useEffect(() => {
         const fetchingTodo = async () => {
             const response = await fetch(`http://localhost:5050/list?name=${name}`, {
+                //Endpoint GetTodo
                 method: 'GET',
                 credentials: 'include'
             })
@@ -34,6 +35,7 @@ const Addtodo = () => {
         e.preventDefault();
 
         const response = await fetch('http://localhost:5050/list/addtodolist', {
+            //Endpoint: AddTodoList
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -55,6 +57,7 @@ const Addtodo = () => {
         e.preventDefault();
         
         const response = await fetch('http://localhost:5050/list/addtodo', {
+            //Endpoint: AddTodo
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

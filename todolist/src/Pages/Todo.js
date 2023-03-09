@@ -16,6 +16,7 @@ const Todo = () => {
     useEffect(() => {
         const fetchingTodo = async () => {
             const response = await fetch(`http://localhost:5050/todo/showtodo?id=${id}`, {
+                //Endpoint: ShowTodo
                 method: 'GET',
                 credentials: 'include',
                 })
@@ -35,6 +36,7 @@ const Todo = () => {
 
     const deleteTodo = async (id) => {
         const response = await fetch(`http://localhost:5050/todo?id=${id}`, {
+            //Endpoint: DeleteTodo
             method: 'DELETE',
             credentials: 'include'
         })
@@ -64,6 +66,7 @@ const Todo = () => {
         const todo = forPatch
 
         const response = await fetch(`http://localhost:5050/todo`, {
+            //Endpoint: PatchTodo
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -94,6 +97,7 @@ const Todo = () => {
         e.preventDefault();
 
         const response = await fetch(`http://localhost:5050/todo/addnewtodo?`, {
+            //Endpoint: AddTodotoList
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

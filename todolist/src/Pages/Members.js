@@ -8,6 +8,7 @@ const Members = () => {
     useEffect(() => {
         const fetchingMembers = async () => {
             const response = await fetch('http://localhost:5050/members', {
+                // Endpoint: GetMembers
                 method: 'GET',
                 credentials: 'include'
             })
@@ -25,6 +26,7 @@ const Members = () => {
 
     const addfriend = async (id) => {
         const response = await fetch(`http://localhost:5050/members?id=${id}`, {
+            // Endpoint: AddFriend
             method: 'POST',
             credentials: 'include',
         })

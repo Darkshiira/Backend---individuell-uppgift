@@ -13,6 +13,7 @@ const Member = () => {
         const fetchingMember = async () => {
             const member = id.split(":")[1];
             const response = await fetch(`http://localhost:5050/members/profile?member=${member}`, {
+                //Endpoint: Friendprofile
                 method: 'GET',
                 credentials: 'include'
             })

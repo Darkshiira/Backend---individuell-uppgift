@@ -10,6 +10,7 @@ const Nav = () => {
     useEffect(() => {
         const fetchingLoggedIn = async () => {
             const response = await fetch('http://localhost:5050/auth/verify', {
+                // Endpoint: Verify
                 method: 'GET',
                 credentials: 'include'
             })
@@ -29,6 +30,7 @@ const Nav = () => {
 
     const LogOut = async () => {
         const response = await fetch('http://localhost:5050/auth/logout', {
+            // Endpoint Logout
             method: 'GET',
             credentials: 'include'
         })
@@ -48,6 +50,7 @@ const Nav = () => {
         e.preventDefault();
         const fetching = async () => {
             const response = await fetch('http://localhost:5050/auth/login', {
+                // Endpoint Login
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
