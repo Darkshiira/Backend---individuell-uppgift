@@ -22,7 +22,7 @@ module.exports.AddTodoList =  async (req, res) => {
     const {name, username} = value;
     try {
     await List.query().insert({userName: username, listName: name})
-    res.status(201).json('Todo added');
+    res.status(201).json('Todolist added');
     }
     catch(error){
 

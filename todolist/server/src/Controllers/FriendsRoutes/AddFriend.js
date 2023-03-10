@@ -31,7 +31,6 @@ module.exports.AddFriend= async (req, res) => {
     try {
     const friend = await User.query().select().where('id', id);
     if (friend.length === 0) return res.status(404).json('Friend not found');
-    if (friend[0].userName === username) return res.status(409).json('You cant add yourself as a friend');
     await Friends.query().insert({
         userName: username,
         userFriends: friend[0].userName,

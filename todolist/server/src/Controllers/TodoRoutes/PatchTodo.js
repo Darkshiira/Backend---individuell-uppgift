@@ -22,7 +22,7 @@ module.exports.PatchTodo =  async (req, res) => {
     if(error) return res.status(400).json(error.details[0].message);
     const {todo, id} = value;
     try {
-    Todo.query().findById(id).patch({
+    await Todo.query().findById(id).patch({
         toDo: todo,
     })
     res.status(201).json('Todo updated');

@@ -29,17 +29,7 @@ module.exports.DeleteList = async (req, res) => {
     try {
     const listname = await List.query().select('listName').where('userName', username ).andWhere('id', id)
     if (listname.length === 0) return res.status(404).json('Theres no such list');
-    }
-    catch (err) {
-    return res.status(500).json("Internal server error");
-    }
-    try {
     await Todo.query().delete().where('listName', listname[0].listName)
-    }
-    catch (err) {
-    return res.status(500).json("Internal server error");
-    }
-    try {
     const todo = await List.query().delete().where('userName', username ).andWhere('id', id)
     if (todo.length === 0) return res.status(404).json('Couldnt find the List');
     res.status(200).json('Your list has been deleted');
